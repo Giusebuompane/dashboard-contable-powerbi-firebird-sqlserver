@@ -1,0 +1,152 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 186.66667175292969
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 923.03322174815617,
+            "y": 32.359043048459966
+          },
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "9e97453d-5db7-4e96-a9e4-2479f5d35b7f",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 446.84502514393409
+          },
+          "nodeIndex": "CLA_2026",
+          "nodeLineageTag": "8902183e-b138-4e89-91e0-4b6733d2d822",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 337.03430269899775,
+            "y": 301.4472621685681
+          },
+          "nodeIndex": "CLA_INTERMEDIA",
+          "nodeLineageTag": "476df36a-ea63-4c13-9adc-99f61bc63253",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 191.41858444924731,
+            "y": -50
+          },
+          "nodeIndex": "Clientes_ACG",
+          "nodeLineageTag": "170849d3-f915-4490-a09f-1a2c15d84aef",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 594.48937531190654,
+            "y": 529.5019544745802
+          },
+          "nodeIndex": "DIA_2026",
+          "nodeLineageTag": "a0f973c4-f9e9-4bd8-80c4-ee98f03b1cda",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1414.7410299380933,
+            "y": 289.75097723729016
+          },
+          "nodeIndex": "EMPRESA",
+          "nodeLineageTag": "ec15c886-3f42-4dc0-9e57-8fc9942ac2ec",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1180.7410299380936,
+            "y": 386.29447363585814
+          },
+          "nodeIndex": "MAY_2026",
+          "nodeLineageTag": "cde09964-ff53-4c47-b0f5-612038411422",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 880.58517349744079,
+            "y": 384.34341628464733
+          },
+          "nodeIndex": "MAY_INTERMEDIA",
+          "nodeLineageTag": "fb082c7a-4b3a-4431-93d3-6a82719cedaf",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1698.7410299380933,
+            "y": 289.75097723729016
+          },
+          "nodeIndex": "Medidas",
+          "nodeLineageTag": "7fa7cf0e-d8c0-4588-ba64-d00c1d8c6361",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1982.7410299380933,
+            "y": 289.75097723729016
+          },
+          "nodeIndex": "SUJETOS",
+          "nodeLineageTag": "a8403be3-967d-454a-95e0-a6bb24d9b190",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 50,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

@@ -1,0 +1,236 @@
+table Clientes_ACG
+	lineageTag: 170849d3-f915-4490-a09f-1a2c15d84aef
+
+	column NOMBRE
+		dataType: string
+		lineageTag: 714be096-d42d-4486-94ef-f3830d6ef91f
+		summarizeBy: none
+		sourceColumn: NOMBRE
+
+		annotation SummarizationSetBy = Automatic
+
+	column NOMBCOM
+		dataType: string
+		lineageTag: 0e865fe7-12e3-4c0a-b07b-d0650ec76406
+		summarizeBy: none
+		sourceColumn: NOMBCOM
+
+		annotation SummarizationSetBy = Automatic
+
+	column NIF
+		dataType: string
+		lineageTag: f322df38-fa7c-4363-85ca-46809d340aae
+		summarizeBy: none
+		sourceColumn: NIF
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOMICILIO
+		dataType: string
+		lineageTag: 0d767edd-82c8-4346-bdfb-b5287f280215
+		summarizeBy: none
+		sourceColumn: DOMICILIO
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMERO
+		dataType: string
+		lineageTag: fbbdafe4-d995-4de4-9ffa-1f9d003413cb
+		summarizeBy: none
+		sourceColumn: NUMERO
+
+		annotation SummarizationSetBy = Automatic
+
+	column ESCALERA
+		dataType: string
+		lineageTag: 5b92b032-99f4-4afd-ba91-21b49e3aea24
+		summarizeBy: none
+		sourceColumn: ESCALERA
+
+		annotation SummarizationSetBy = Automatic
+
+	column PISO
+		dataType: string
+		lineageTag: 447c7c14-7f8f-4f0f-9ecc-6ef70e77d94a
+		summarizeBy: none
+		sourceColumn: PISO
+
+		annotation SummarizationSetBy = Automatic
+
+	column PUERTA
+		dataType: string
+		lineageTag: c75a8626-a4d0-4481-bf26-e8b4e2704b8e
+		summarizeBy: none
+		sourceColumn: PUERTA
+
+		annotation SummarizationSetBy = Automatic
+
+	column CP
+		dataType: string
+		lineageTag: cf82d308-7a4d-4ad8-bcd8-53f195c9df0e
+		summarizeBy: none
+		sourceColumn: CP
+
+		annotation SummarizationSetBy = Automatic
+
+	column VIA
+		dataType: string
+		lineageTag: bf6622af-feab-485d-927a-6b4155ba1bf0
+		summarizeBy: none
+		sourceColumn: VIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column POBLACION
+		dataType: string
+		lineageTag: d46be791-8e70-4a18-a34c-68dcee38f25b
+		summarizeBy: none
+		sourceColumn: POBLACION
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROVINCIA
+		dataType: string
+		lineageTag: 429d7ac9-005b-4555-873d-9cc819989494
+		summarizeBy: none
+		sourceColumn: PROVINCIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column TELEF1
+		dataType: string
+		lineageTag: a98bb6a6-63fb-4ce9-a5e5-ffae5ad26e87
+		summarizeBy: none
+		sourceColumn: TELEF1
+
+		annotation SummarizationSetBy = Automatic
+
+	column FALTA
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4c7e3d8c-46c4-4ea4-ae5c-3a8d6dd9d3b2
+		summarizeBy: none
+		sourceColumn: FALTA
+
+		variation Variación
+			isDefault
+			relationship: db1b8ffe-0539-458a-b992-6dfd79d0b41c
+			defaultHierarchy: LocalDateTable_576e448b-e763-4286-a810-20c2c4e31579.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column FBAJA
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 23dce4a6-552d-482f-934c-38e72c8725b1
+		summarizeBy: none
+		sourceColumn: FBAJA
+
+		variation Variación
+			isDefault
+			relationship: 9d323791-f64c-4faf-a968-7a0c7411c548
+			defaultHierarchy: LocalDateTable_c6b58b37-d00a-46f9-b41b-5ed064d2466d.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPONIF
+		dataType: string
+		lineageTag: 9051a11d-98e0-4cb8-8817-d3341dc375b2
+		summarizeBy: none
+		sourceColumn: TIPONIF
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo_empresa
+		dataType: int64
+		formatString: 0
+		lineageTag: 947f534d-0f04-4e2f-b7f1-81a08b95b749
+		summarizeBy: none
+		sourceColumn: Codigo_empresa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Clientes_ACG = m
+		mode: import
+		source =
+				let
+				    EMPRESA_Tipo = Table.TransformColumnTypes(EMPRESA, {{"CC", Int64.Type}}),
+				    SUJETOS_Tipo = Table.TransformColumnTypes(SUJETOS, {{"CODEMP", Int64.Type}}),
+				
+				    EMPRESA_Base = Table.SelectColumns(
+				        EMPRESA_Tipo,
+				        {"CC", "FALTA", "FBAJA"},
+				        MissingField.Ignore
+				    ),
+				
+				    Origen = Table.NestedJoin(
+				        EMPRESA_Base,
+				        {"CC"},
+				        SUJETOS_Tipo,
+				        {"CODEMP"},
+				        "SUJETOS",
+				        JoinKind.Inner
+				    ),
+				
+				    #"Se expandió SUJETOS" = Table.ExpandTableColumn(
+				        Origen,
+				        "SUJETOS",
+				        {
+				            "CODEMP", "TIPONIF", "NIF", "NOMBRE", "NOMBCOM",
+				            "DOMICILIO", "NUMERO", "ESCALERA", "PISO", "PUERTA",
+				            "CP", "VIA", "POBLACION", "PROVINCIA", "TELEF1"
+				        },
+				        {
+				            "CODEMP", "TIPONIF", "NIF", "NOMBRE", "NOMBCOM",
+				            "DOMICILIO", "NUMERO", "ESCALERA", "PISO", "PUERTA",
+				            "CP", "VIA", "POBLACION", "PROVINCIA", "TELEF1"
+				        }
+				    ),
+				
+				    #"Columnas quitadas" = Table.RemoveColumns(
+				        #"Se expandió SUJETOS",
+				        {"CODEMP"},
+				        MissingField.Ignore
+				    ),
+				
+				    #"CC renombrado" = Table.RenameColumns(
+				        #"Columnas quitadas",
+				        {{"CC", "Codigo_empresa"}}
+				    ),
+				
+				    #"Columnas seleccionadas" = Table.SelectColumns(
+				        #"CC renombrado",
+				        {
+				            "TIPONIF", "Codigo_empresa", "NIF", "NOMBRE", "NOMBCOM",
+				            "DOMICILIO", "NUMERO", "ESCALERA", "PISO", "PUERTA",
+				            "CP", "VIA", "POBLACION", "PROVINCIA", "TELEF1",
+				            "FALTA", "FBAJA"
+				        },
+				        MissingField.Ignore
+				    ),
+				
+				    #"Columnas reordenadas" = Table.ReorderColumns(
+				        #"Columnas seleccionadas",
+				        {
+				            "TIPONIF", "Codigo_empresa", "NIF", "NOMBRE", "NOMBCOM",
+				            "DOMICILIO", "NUMERO", "ESCALERA", "PISO", "PUERTA",
+				            "CP", "VIA", "POBLACION", "PROVINCIA", "TELEF1",
+				            "FALTA", "FBAJA"
+				        },
+				        MissingField.Ignore
+				    ),
+				
+				    #"Tipo cambiado" = Table.TransformColumnTypes(
+				        #"Columnas reordenadas",
+				        {
+				            {"Codigo_empresa", Int64.Type}
+				        }
+				    ),
+				    #"Filas ordenadas" = Table.Sort(#"Tipo cambiado",{{"Codigo_empresa", Order.Ascending}})
+				in
+				    #"Filas ordenadas"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

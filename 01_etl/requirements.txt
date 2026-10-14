@@ -1,0 +1,5 @@
+firebird-driver
+pandas
+SQLAlchemy
+pyodbc
+python-dotenv

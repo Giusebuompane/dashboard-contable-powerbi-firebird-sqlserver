@@ -1,0 +1,14 @@
+# Credenciales y configuración local de la ETL
+.env
+01_etl/logs/
+
+# Datos generados (se pueden volver a crear con 02_datos_demo/generar_datos_demo.py)
+02_datos_demo/csv/
+
+# Power BI Project: caché de datos y ajustes locales de Power BI Desktop
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Python
+__pycache__/
+.venv/

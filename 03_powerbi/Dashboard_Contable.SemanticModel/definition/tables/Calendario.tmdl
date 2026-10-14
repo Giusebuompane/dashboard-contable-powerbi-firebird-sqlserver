@@ -1,0 +1,155 @@
+table Calendario
+	lineageTag: 9e97453d-5db7-4e96-a9e4-2479f5d35b7f
+	dataCategory: Time
+
+	column Fecha
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: a69eba13-ac60-42f3-b2cf-754da400a68f
+		summarizeBy: none
+		sourceColumn: Fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Año
+		dataType: int64
+		formatString: 0
+		lineageTag: a5c7fe09-70f0-41c5-8f9c-33c1d65c56fd
+		summarizeBy: none
+		sourceColumn: Año
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes
+		dataType: int64
+		formatString: 0
+		lineageTag: 314a7ebb-a92b-4168-9d35-28a4cfe22fe2
+		summarizeBy: none
+		sourceColumn: Mes
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Día
+		dataType: int64
+		formatString: 0
+		lineageTag: 27a75734-795d-46cd-a6cc-d06d029db1ed
+		summarizeBy: none
+		sourceColumn: Día
+
+		annotation SummarizationSetBy = Automatic
+
+	column NombreMes
+		dataType: string
+		lineageTag: dbecffc4-6e55-4f2f-adb5-93304435e8fe
+		summarizeBy: none
+		sourceColumn: NombreMes
+		sortByColumn: Mes
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		dataType: string
+		lineageTag: bd3d4c06-b91d-4b30-8607-1ff240db0f04
+		summarizeBy: none
+		sourceColumn: Trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiaSemana
+		dataType: int64
+		formatString: 0
+		lineageTag: 93fca340-f7a3-4ec1-9fc0-7114729a0138
+		summarizeBy: none
+		sourceColumn: DiaSemana
+
+		annotation SummarizationSetBy = Automatic
+
+	column NombreDiaSemana
+		dataType: string
+		lineageTag: 7ba388c4-5fd6-4f3e-9a28-a4b48f39c83c
+		summarizeBy: none
+		sourceColumn: NombreDiaSemana
+
+		annotation SummarizationSetBy = Automatic
+
+	column MesAño
+		dataType: string
+		lineageTag: 08720592-aba6-4142-9dd1-26538ac1a929
+		summarizeBy: none
+		sourceColumn: MesAño
+
+		annotation SummarizationSetBy = Automatic
+
+	column AñoMes
+		dataType: string
+		lineageTag: 76b743e5-067c-415c-97ad-85ef1de0d20c
+		summarizeBy: none
+		sourceColumn: AñoMes
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Fecha Jerarquía'
+		lineageTag: 8d148caf-fe30-4f5f-bb93-b066fc2a2529
+
+		level Fecha
+			lineageTag: a0726dc2-7139-4eb2-b877-b5747d54b1d7
+			column: Fecha
+
+	partition Calendario = m
+		mode: import
+		source =
+				let
+				    // Obtener fechas de la tabla DIA
+				    FechasDIA = List.RemoveNulls(DIA_2026[FECHA]),
+				
+				    TodasFechas = FechasDIA,
+				
+				    // Fecha mínima y máxima
+				    FechaMin = List.Min(TodasFechas),
+				    FechaMax = List.Max(TodasFechas),
+				
+				    // Generar lista de fechas
+				    ListaFechas = List.Dates(
+				        FechaMin,
+				        Duration.Days(FechaMax - FechaMin) + 1,
+				        #duration(1, 0, 0, 0)
+				    ),
+				
+				    // Convertir a tabla
+				    TablaCalendario = Table.FromList(
+				        ListaFechas,
+				        Splitter.SplitByNothing(),
+				        {"Fecha"}
+				    ),
+				
+				    // Columnas auxiliares
+				    AñadirAño = Table.AddColumn(TablaCalendario, "Año", each Date.Year([Fecha]), Int64.Type),
+				    AñadirMes = Table.AddColumn(AñadirAño, "Mes", each Date.Month([Fecha]), Int64.Type),
+				    AñadirDía = Table.AddColumn(AñadirMes, "Día", each Date.Day([Fecha]), Int64.Type),
+				    AñadirNombreMes = Table.AddColumn(AñadirDía, "NombreMes", each Date.ToText([Fecha], "MMMM"), type text),
+				    AñadirTrimestre = Table.AddColumn(AñadirNombreMes, "Trimestre", each "T" & Number.ToText(Date.QuarterOfYear([Fecha])), type text),
+				    AñadirDiaSemana = Table.AddColumn(AñadirTrimestre, "DiaSemana", each Date.DayOfWeek([Fecha], Day.Monday) + 1, Int64.Type),
+				    AñadirNombreDiaSemana = Table.AddColumn(AñadirDiaSemana, "NombreDiaSemana", each Date.ToText([Fecha], "dddd"), type text),
+				    AñadirMesAño = Table.AddColumn(AñadirNombreDiaSemana, "MesAño", each Date.ToText([Fecha], "MMM yyyy"), type text),
+				    AñadirAñoMes = Table.AddColumn(
+				        AñadirMesAño,
+				        "AñoMes",
+				        each Number.ToText(Date.Year([Fecha])) & Text.PadStart(Number.ToText(Date.Month([Fecha])), 2, "0"),
+				        type text
+				    ),
+				
+				    #"Tipo cambiado" = Table.TransformColumnTypes(AñadirAñoMes, {{"Fecha", type date}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

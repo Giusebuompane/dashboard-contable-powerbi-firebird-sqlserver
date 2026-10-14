@@ -1,0 +1,36 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-ES
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Servidor_SQL","Base_Datos_SQL","DIA_2026","MAY_2026","CLA_2026","Calendario","EMPRESA","SUJETOS","Clientes_ACG"]
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table Medidas
+ref table DateTableTemplate_48fe8077-7c49-47b8-ad3b-6a9c752e2f8f
+ref table DIA_2026
+ref table MAY_2026
+ref table CLA_2026
+ref table Calendario
+ref table MAY_INTERMEDIA
+ref table CLA_INTERMEDIA
+ref table EMPRESA
+ref table LocalDateTable_4985e77a-0d17-412b-a808-cb242c8737e9
+ref table LocalDateTable_edf26459-67c8-4202-9c24-aa695d10189e
+ref table LocalDateTable_5209b8d2-3ff8-4ab2-932a-b6e4dea05c7c
+ref table LocalDateTable_4205f44e-2c79-4945-a408-bd40440cbb0a
+ref table SUJETOS
+ref table LocalDateTable_49c2daba-f037-4f39-a00a-697d1e48d277
+ref table LocalDateTable_843f9b07-8ec3-4c7a-9f22-ff789d55dc47
+ref table Clientes_ACG
+ref table LocalDateTable_576e448b-e763-4286-a810-20c2c4e31579
+ref table LocalDateTable_c6b58b37-d00a-46f9-b41b-5ed064d2466d
+
+ref cultureInfo es-ES
+

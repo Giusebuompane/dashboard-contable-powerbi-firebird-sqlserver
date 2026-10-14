@@ -1,0 +1,378 @@
+table MAY_2026
+	lineageTag: cde09964-ff53-4c47-b0f5-612038411422
+
+	column CODIGO
+		dataType: int64
+		formatString: 0
+		lineageTag: 758c18e8-b27e-4b0e-8901-e93f2eb52017
+		summarizeBy: none
+		sourceColumn: CODIGO
+
+		annotation SummarizationSetBy = User
+
+	column TITULO
+		dataType: string
+		lineageTag: afdd33d0-eef1-4c6d-97c2-8042fe473e2b
+		summarizeBy: none
+		sourceColumn: TITULO
+
+		annotation SummarizationSetBy = Automatic
+
+	column NOTAS
+		dataType: string
+		lineageTag: ca08194f-7141-484e-a968-0cd47bfabdd2
+		summarizeBy: none
+		sourceColumn: NOTAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEBEINI
+		dataType: double
+		formatString: 0
+		lineageTag: f768fbf6-51a9-4727-b5d8-01f8b28ddbba
+		summarizeBy: none
+		sourceColumn: DEBEINI
+
+		annotation SummarizationSetBy = User
+
+	column HABERINI
+		dataType: double
+		formatString: 0
+		lineageTag: 5c7eaa6a-fb50-4795-8e35-83121b75a137
+		summarizeBy: none
+		sourceColumn: HABERINI
+
+		annotation SummarizationSetBy = User
+
+	column DEBEACU
+		dataType: double
+		formatString: 0
+		lineageTag: 1a1d34af-2588-426e-a2b1-2758cf3ec8cb
+		summarizeBy: none
+		sourceColumn: DEBEACU
+
+		annotation SummarizationSetBy = User
+
+	column HABERACU
+		dataType: double
+		formatString: 0
+		lineageTag: 7602f761-87dd-4b73-9b3f-4898512a2c04
+		summarizeBy: none
+		sourceColumn: HABERACU
+
+		annotation SummarizationSetBy = User
+
+	column DENERO
+		dataType: double
+		formatString: 0
+		lineageTag: 4a702554-005d-4b7c-b62e-cabb55bd95d0
+		summarizeBy: none
+		sourceColumn: DENERO
+
+		annotation SummarizationSetBy = User
+
+	column HENERO
+		dataType: double
+		formatString: 0
+		lineageTag: 8a8c253d-1136-4d17-842f-dd57052a4b49
+		summarizeBy: none
+		sourceColumn: HENERO
+
+		annotation SummarizationSetBy = User
+
+	column DFEBRERO
+		dataType: double
+		formatString: 0
+		lineageTag: d6e10148-97fb-43bf-999c-ab1c5268c166
+		summarizeBy: none
+		sourceColumn: DFEBRERO
+
+		annotation SummarizationSetBy = User
+
+	column HFEBRERO
+		dataType: double
+		formatString: 0
+		lineageTag: 9104380f-a714-4d75-8760-f45c8abb0082
+		summarizeBy: none
+		sourceColumn: HFEBRERO
+
+		annotation SummarizationSetBy = User
+
+	column DMARZO
+		dataType: double
+		formatString: 0
+		lineageTag: 5da8641f-4ba2-438b-aa6c-662dadaab325
+		summarizeBy: none
+		sourceColumn: DMARZO
+
+		annotation SummarizationSetBy = User
+
+	column HMARZO
+		dataType: double
+		formatString: 0
+		lineageTag: 34648087-3b71-4e34-8887-773dc94cc485
+		summarizeBy: none
+		sourceColumn: HMARZO
+
+		annotation SummarizationSetBy = User
+
+	column DABRIL
+		dataType: double
+		formatString: 0
+		lineageTag: 2c0ae001-2d4a-442b-b7f5-6b6c20c8bf68
+		summarizeBy: none
+		sourceColumn: DABRIL
+
+		annotation SummarizationSetBy = User
+
+	column HABRIL
+		dataType: double
+		formatString: 0
+		lineageTag: 06ac43ff-7099-46aa-bbc5-5481ca5f0ac3
+		summarizeBy: none
+		sourceColumn: HABRIL
+
+		annotation SummarizationSetBy = User
+
+	column DMAYO
+		dataType: double
+		formatString: 0
+		lineageTag: f53ac355-8de8-4781-b8e2-c888857118aa
+		summarizeBy: none
+		sourceColumn: DMAYO
+
+		annotation SummarizationSetBy = User
+
+	column HMAYO
+		dataType: double
+		formatString: 0
+		lineageTag: c47ce173-5d8a-41de-8db9-babd9502b2c7
+		summarizeBy: none
+		sourceColumn: HMAYO
+
+		annotation SummarizationSetBy = User
+
+	column DJUNIO
+		dataType: double
+		formatString: 0
+		lineageTag: 2ccfdc4e-959f-4d69-9509-dc60ddc7dab1
+		summarizeBy: none
+		sourceColumn: DJUNIO
+
+		annotation SummarizationSetBy = User
+
+	column HJUNIO
+		dataType: double
+		formatString: 0
+		lineageTag: b31de55b-687e-4fe3-9c8c-370aa7295dda
+		summarizeBy: none
+		sourceColumn: HJUNIO
+
+		annotation SummarizationSetBy = User
+
+	column DJULIO
+		dataType: double
+		formatString: 0
+		lineageTag: b6752d08-7fda-44f7-b1e2-7871539d300e
+		summarizeBy: none
+		sourceColumn: DJULIO
+
+		annotation SummarizationSetBy = User
+
+	column HJULIO
+		dataType: double
+		formatString: 0
+		lineageTag: 7d980cd7-d2d7-43e6-94f1-c2cbd83a2589
+		summarizeBy: none
+		sourceColumn: HJULIO
+
+		annotation SummarizationSetBy = User
+
+	column DAGOSTO
+		dataType: double
+		formatString: 0
+		lineageTag: 6b8d34fb-77a8-4ef6-9e98-8706cf6c4733
+		summarizeBy: none
+		sourceColumn: DAGOSTO
+
+		annotation SummarizationSetBy = User
+
+	column HAGOSTO
+		dataType: double
+		formatString: 0
+		lineageTag: a6d4c7fc-03f0-49ec-9450-cd6de3a90ff6
+		summarizeBy: none
+		sourceColumn: HAGOSTO
+
+		annotation SummarizationSetBy = User
+
+	column DSEPTIEM
+		dataType: double
+		formatString: 0
+		lineageTag: 5e614a83-6e6b-475d-b5a3-9591b5e48a33
+		summarizeBy: none
+		sourceColumn: DSEPTIEM
+
+		annotation SummarizationSetBy = User
+
+	column HSEPTIEM
+		dataType: double
+		formatString: 0
+		lineageTag: ec2defa7-ec95-4a52-b369-0f7db3c0e8df
+		summarizeBy: none
+		sourceColumn: HSEPTIEM
+
+		annotation SummarizationSetBy = User
+
+	column DOCTUBRE
+		dataType: double
+		formatString: 0
+		lineageTag: b050fe98-87c9-4466-b999-f98ca0ceb091
+		summarizeBy: none
+		sourceColumn: DOCTUBRE
+
+		annotation SummarizationSetBy = User
+
+	column HOCTUBRE
+		dataType: double
+		formatString: 0
+		lineageTag: 250ffdd2-1a41-489e-9ec9-9a9c9f73b63b
+		summarizeBy: none
+		sourceColumn: HOCTUBRE
+
+		annotation SummarizationSetBy = User
+
+	column DNOVIEM
+		dataType: double
+		formatString: 0
+		lineageTag: 46dff73b-380d-4ef3-b81a-046adfcf1b3d
+		summarizeBy: none
+		sourceColumn: DNOVIEM
+
+		annotation SummarizationSetBy = User
+
+	column HNOVIEM
+		dataType: double
+		formatString: 0
+		lineageTag: d40d4e77-1d1b-4638-bf66-88efab0bd542
+		summarizeBy: none
+		sourceColumn: HNOVIEM
+
+		annotation SummarizationSetBy = User
+
+	column DDICIEM
+		dataType: double
+		formatString: 0
+		lineageTag: 1e2c15e5-10cc-42b2-b277-4d2dcbfe5354
+		summarizeBy: none
+		sourceColumn: DDICIEM
+
+		annotation SummarizationSetBy = User
+
+	column HDICIEM
+		dataType: double
+		formatString: 0
+		lineageTag: ca99c1b7-43a5-4b4d-85ce-dc0103e55b1e
+		summarizeBy: none
+		sourceColumn: HDICIEM
+
+		annotation SummarizationSetBy = User
+
+	column TIPO
+		dataType: string
+		lineageTag: 460a0a98-1489-493b-9f23-d2c5ac7e39ae
+		summarizeBy: none
+		sourceColumn: TIPO
+
+		annotation SummarizationSetBy = Automatic
+
+	column NIF
+		dataType: string
+		lineageTag: e964889b-bd12-4c2c-87c6-491454f36e92
+		summarizeBy: none
+		sourceColumn: NIF
+
+		annotation SummarizationSetBy = Automatic
+
+	column SEXISTEN
+		dataType: double
+		formatString: 0
+		lineageTag: 20b0f650-3c0d-4b6a-a161-bd624fbd1351
+		summarizeBy: none
+		sourceColumn: SEXISTEN
+
+		annotation SummarizationSetBy = User
+
+	column DESCRIP
+		dataType: string
+		lineageTag: 1a1c1c8f-014c-4c56-bd80-69b641c76619
+		summarizeBy: none
+		sourceColumn: DESCRIP
+
+		annotation SummarizationSetBy = Automatic
+
+	column DESCRIPCION_SII
+		dataType: string
+		lineageTag: 9279ecac-0ee0-49db-ad97-4e73375c2f84
+		summarizeBy: none
+		sourceColumn: DESCRIPCION_SII
+
+		annotation SummarizationSetBy = Automatic
+
+	column Año
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d0bd36e-3539-4916-836c-428659556344
+		summarizeBy: sum
+		sourceColumn: Año
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo_empresa
+		dataType: int64
+		formatString: 0
+		lineageTag: 36a7af7e-2019-4e0a-9b53-9d9b79ef84ac
+		summarizeBy: none
+		sourceColumn: Codigo_empresa
+
+		annotation SummarizationSetBy = User
+
+	column Llave_compuesta = ```
+			
+			FORMAT(MAY_2026[Año], "0") 
+			& "-" & 
+			FORMAT(MAY_2026[CODIGO], "0") 
+			& "-" & 
+			FORMAT(MAY_2026[Codigo_empresa], "0")
+			```
+		lineageTag: 285a4a35-7491-46ec-8481-fb5b98a57120
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Es Cuenta 640' =
+			
+			IF(
+			    LEFT(FORMAT(MAY_2026[CODIGO], "0"), 3) = "640",
+			    "Sí",
+			    "No"
+			)
+		lineageTag: bc0f1a0b-57d7-47c7-aecd-5c7273e27ae8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MAY_2026 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database(Servidor_SQL, Base_Datos_SQL){[Schema="dbo",Item="MAY_2026"]}[Data],
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"CODIGO", Int64.Type}, {"TITULO", type text}, {"NOTAS", type text}, {"DEBEINI", type number}, {"HABERINI", type number}, {"DEBEACU", type number}, {"HABERACU", type number}, {"DENERO", type number}, {"HENERO", type number}, {"DFEBRERO", type number}, {"HFEBRERO", type number}, {"DMARZO", type number}, {"HMARZO", type number}, {"DABRIL", type number}, {"HABRIL", type number}, {"DMAYO", type number}, {"HMAYO", type number}, {"DJUNIO", type number}, {"HJUNIO", type number}, {"DJULIO", type number}, {"HJULIO", type number}, {"DAGOSTO", type number}, {"HAGOSTO", type number}, {"DSEPTIEM", type number}, {"HSEPTIEM", type number}, {"DOCTUBRE", type number}, {"HOCTUBRE", type number}, {"DNOVIEM", type number}, {"HNOVIEM", type number}, {"DDICIEM", type number}, {"HDICIEM", type number}, {"TIPO", type text}, {"NIF", type text}, {"SEXISTEN", type number}, {"DESCRIP", type text}, {"DESCRIPCION_SII", type text}, {"Año", Int64.Type}, {"Codigo_empresa", Int64.Type}}),
+				    #"Errores quitados" = Table.RemoveRowsWithErrors(#"Tipo cambiado", {"CODIGO"})
+				in
+				    #"Errores quitados"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

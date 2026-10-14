@@ -1,0 +1,60 @@
+table MAY_INTERMEDIA
+	lineageTag: fb082c7a-4b3a-4431-93d3-6a82719cedaf
+
+	column CODIGO
+		formatString: 0
+		lineageTag: d681c729-d974-449c-85d7-dd9fd1438935
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [CODIGO]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo_empresa
+		formatString: 0
+		lineageTag: 7ed1bc91-3285-4b0b-bc74-523f614be7e1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Codigo_empresa]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Llave_compuesta
+		lineageTag: 562531ad-e2b4-4949-b13c-33ef7eb9a5f5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Llave_compuesta]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Año
+		formatString: 0
+		lineageTag: 3e54a728-cbdd-4f5b-8eb6-1b9885bfc84c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Año]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MAY_INTERMEDIA = calculated
+		mode: import
+		source = ```
+				
+				DISTINCT(
+				    SELECTCOLUMNS(
+				        MAY_2026,
+				        "Año", MAY_2026[Año],
+				        "CODIGO", MAY_2026[CODIGO],
+				        "Codigo_empresa", MAY_2026[Codigo_empresa],
+				        "Llave_compuesta", 
+				            FORMAT(MAY_2026[Año], "0") 
+				            & "-" & 
+				            FORMAT(MAY_2026[CODIGO], "0") 
+				            & "-" & 
+				            FORMAT(MAY_2026[Codigo_empresa], "0")
+				    )
+				)
+				```
+
+	annotation PBI_Id = 5a28ccff0b94488189819271836470df
+

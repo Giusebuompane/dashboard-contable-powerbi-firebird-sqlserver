@@ -1,0 +1,836 @@
+table Medidas
+	lineageTag: 7fa7cf0e-d8c0-4588-ba64-d00c1d8c6361
+
+	measure 'Total Facturado' =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 1) = "7"
+			                &&
+			            NOT (
+			                UPPER(
+			                    TRIM(
+			                        SUBSTITUTE(
+			                            COALESCE(DIA_2026[TIPO], ""),
+			                            UNICHAR(160),
+			                            ""
+			                        )
+			                    )
+			                ) IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[HABER] - DIA_2026[DEBE]
+			    )
+			-- Primer día del periodo según el calendario, sin el recorte que hace DIA (relación bidireccional) a los días con apuntes
+			VAR _inicioPeriodo =
+			    CALCULATE(MIN(Calendario[Fecha]), CROSSFILTER(DIA_2026[FECHA], Calendario[Fecha], OneWay))
+			RETURN
+			    IF(
+			        _inicioPeriodo > TODAY(),
+			        BLANK(),
+			        IF(ABS(Resultado) < 0.01, 0, Resultado)
+			    )
+		lineageTag: d1ba515b-34f7-473d-addb-915d221b3a22
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Gastos' =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 1) = "6"
+			                &&
+			            NOT (
+			                UPPER(
+			                    TRIM(
+			                        SUBSTITUTE(
+			                            COALESCE(DIA_2026[TIPO], ""),
+			                            UNICHAR(160),
+			                            ""
+			                        )
+			                    )
+			                ) IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[DEBE] - DIA_2026[HABER]
+			    )
+			RETURN
+			    IF(
+			        ABS(Resultado) < 0.01,
+			        0,
+			        Resultado
+			    )
+		lineageTag: 0e140601-dc61-4b6a-8fcd-e314b41bb048
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Margen =
+			
+			[Total Facturado] - [Total Gastos]
+		lineageTag: b4edd1ec-bafd-4ac6-b2d8-1234b0016917
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Margen' =
+			
+			DIVIDE(
+			    [Margen],
+			    [Total Facturado],
+			    0
+			)
+		lineageTag: cf7e0b78-9804-4459-b86a-3f8656f7e6e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Saldo =
+			
+			SUM(DIA_2026[DEBE]) - SUM(DIA_2026[HABER])
+		lineageTag: f6a631a0-e55c-443f-a03e-8d13c1f1077d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total IVA a liquidar' =
+			
+			VAR _hoy = TODAY()
+			VAR _maxCal = MAX(Calendario[Fecha])
+			VAR _fechaMaxima = IF(ISBLANK(_maxCal), BLANK(), IF(_maxCal > _hoy, _hoy, _maxCal))
+			VAR _anioSeleccionado = YEAR(_fechaMaxima)
+			VAR _inicioEjercicio = DATE(_anioSeleccionado, 1, 1)
+			VAR _esCierreIVA =
+			    FILTER(
+			        ALL(DIA_2026[CUENTA], DIA_2026[CONCEPTO]),
+			        LEFT(UPPER(TRIM(COALESCE(DIA_2026[CONCEPTO], ""))), 10) = "CIERRE IVA"
+			    )
+			VAR _iva475Periodo =
+			    CALCULATE(
+			        SUMX(DIA_2026, DIA_2026[HABER] - DIA_2026[DEBE]),
+			        FILTER(_esCierreIVA, LEFT(TRIM(DIA_2026[CUENTA]), 3) = "475")
+			    )
+			VAR _ultima475 =
+			    CALCULATE(
+			        MAX(DIA_2026[FECHA]),
+			        REMOVEFILTERS(Calendario),
+			        DATESBETWEEN(Calendario[Fecha], _inicioEjercicio, _fechaMaxima),
+			        FILTER(_esCierreIVA, LEFT(TRIM(DIA_2026[CUENTA]), 3) = "475")
+			    )
+			VAR _inicioArrastre = IF(ISBLANK(_ultima475), _inicioEjercicio, _ultima475 + 1)
+			VAR _iva470Arrastre =
+			    IF(
+			        _inicioArrastre > _fechaMaxima,
+			        0,
+			        CALCULATE(
+			            SUMX(DIA_2026, DIA_2026[HABER] - DIA_2026[DEBE]),
+			            REMOVEFILTERS(Calendario),
+			            DATESBETWEEN(Calendario[Fecha], _inicioArrastre, _fechaMaxima),
+			            FILTER(_esCierreIVA, LEFT(TRIM(DIA_2026[CUENTA]), 3) = "470")
+			        )
+			    )
+			VAR _inicioTrimestreActual = DATE(_anioSeleccionado, (QUARTER(_fechaMaxima) - 1) * 3 + 1, 1)
+			VAR _cierreTrimestreActual =
+			    CALCULATE(
+			        COUNTROWS(DIA_2026),
+			        REMOVEFILTERS(Calendario),
+			        DATESBETWEEN(Calendario[Fecha], _inicioTrimestreActual, EOMONTH(_inicioTrimestreActual, 2)),
+			        FILTER(_esCierreIVA, LEFT(TRIM(DIA_2026[CUENTA]), 3) IN {"475", "470"})
+			    )
+			VAR _trimestreAbierto = _cierreTrimestreActual = 0
+			VAR _ivaTrimestreEnCurso =
+			    CALCULATE(
+			        SUMX(DIA_2026, DIA_2026[HABER] - DIA_2026[DEBE]),
+			        REMOVEFILTERS(Calendario),
+			        DATESBETWEEN(Calendario[Fecha], _inicioTrimestreActual, _fechaMaxima),
+			        FILTER(ALL(DIA_2026[CUENTA]), LEFT(TRIM(DIA_2026[CUENTA]), 3) IN {"477", "472"})
+			    )
+			-- Saldo de IVA a compensar en 4700/4709. Solo cuentan las subcuentas que han recibido algún CIERRE IVA de esa empresa;
+			-- las que no (p.ej. devoluciones de Impuesto de Sociedades) se excluyen. DIA no trae asiento de apertura:
+			-- el saldo inicial se toma del CIERRE DE EJERCICIO del año anterior con signo contrario.
+			VAR _saldoIVA470 =
+			    SUMX(
+			        VALUES(DIA_2026[Codigo_empresa]),
+			        VAR _subcuentasIVA =
+			            CALCULATETABLE(
+			                VALUES(DIA_2026[CUENTA]),
+			                REMOVEFILTERS(Calendario),
+			                FILTER(ALL(DIA_2026[CONCEPTO]), LEFT(UPPER(TRIM(COALESCE(DIA_2026[CONCEPTO], ""))), 10) = "CIERRE IVA"),
+			                FILTER(ALL(DIA_2026[CUENTA]), LEFT(TRIM(DIA_2026[CUENTA]), 4) IN {"4700", "4709"})
+			            )
+			        VAR _inicial =
+			            - CALCULATE(
+			                SUMX(DIA_2026, DIA_2026[HABER] - DIA_2026[DEBE]),
+			                REMOVEFILTERS(Calendario),
+			                FILTER(ALL(DIA_2026[FECHA]), DIA_2026[FECHA] = DATE(_anioSeleccionado - 1, 12, 31)),
+			                _subcuentasIVA,
+			                FILTER(ALL(DIA_2026[TIPO]), UPPER(TRIM(SUBSTITUTE(COALESCE(DIA_2026[TIPO], ""), UNICHAR(160), ""))) = "CIER")
+			            )
+			        VAR _movimientos =
+			            CALCULATE(
+			                SUMX(DIA_2026, DIA_2026[HABER] - DIA_2026[DEBE]),
+			                REMOVEFILTERS(Calendario),
+			                FILTER(ALL(DIA_2026[FECHA]), DIA_2026[FECHA] >= _inicioEjercicio && DIA_2026[FECHA] <= _fechaMaxima),
+			                _subcuentasIVA,
+			                FILTER(ALL(DIA_2026[TIPO]), UPPER(TRIM(SUBSTITUTE(COALESCE(DIA_2026[TIPO], ""), UNICHAR(160), ""))) <> "CIER")
+			            )
+			        RETURN _inicial + _movimientos
+			    )
+			VAR Resultado =
+			    IF(
+			        _trimestreAbierto,
+			        _ivaTrimestreEnCurso + _saldoIVA470,
+			        _iva475Periodo + _iva470Arrastre
+			    )
+			RETURN
+			    IF(
+			        ISBLANK(_fechaMaxima) || MIN(Calendario[Fecha]) > _hoy,
+			        BLANK(),
+			        IF(ABS(Resultado) < 0.01, 0, Resultado)
+			    )
+		lineageTag: 02da515e-1066-4918-8862-ec06718a1649
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Saldo Bancos' =
+			
+			VAR _fechaMaxima =
+			    MAX(Calendario[Fecha])
+			
+			VAR _anioSeleccionado =
+			    YEAR(_fechaMaxima)
+			
+			VAR _inicioEjercicio =
+			    DATE(_anioSeleccionado, 1, 1)
+			
+			/* =====================================================
+			   Si el ano seleccionado ya tiene su asiento de cierre contable
+			   (TIPO=CIER a 31/12), ese es el saldo real conciliado con el
+			   extracto bancario -- lo usamos directamente en vez de sumar
+			   los movimientos, porque puede haber ajustes de conciliacion
+			   que no estan reflejados como movimientos individuales.
+			   Si el ano sigue abierto (aun no se ha cerrado, ej. el ano en
+			   curso), usamos el ultimo cierre conocido + los movimientos
+			   del ano en curso.
+			   ===================================================== */
+			
+			VAR _cierreEsteAnio =
+			    CALCULATE(
+			        SUMX(
+			            DIA_2026,
+			            DIA_2026[HABER] - DIA_2026[DEBE]
+			        ),
+			        REMOVEFILTERS(Calendario),
+			        DATESBETWEEN(
+			            Calendario[Fecha],
+			            _inicioEjercicio,
+			            _fechaMaxima
+			        ),
+			        FILTER(
+			            ALL(
+			                DIA_2026[CUENTA],
+			                DIA_2026[TIPO]
+			            ),
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "572"
+			                && DIA_2026[TIPO] = "CIER"
+			        )
+			    )
+			
+			VAR _numCierreEsteAnio =
+			    CALCULATE(
+			        COUNTROWS(DIA_2026),
+			        REMOVEFILTERS(Calendario),
+			        DATESBETWEEN(
+			            Calendario[Fecha],
+			            _inicioEjercicio,
+			            _fechaMaxima
+			        ),
+			        FILTER(
+			            ALL(
+			                DIA_2026[CUENTA],
+			                DIA_2026[TIPO]
+			            ),
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "572"
+			                && DIA_2026[TIPO] = "CIER"
+			        )
+			    )
+			
+			VAR _saldoInicial =
+			    CALCULATE(
+			        SUMX(
+			            DIA_2026,
+			            DIA_2026[HABER] - DIA_2026[DEBE]
+			        ),
+			        REMOVEFILTERS(Calendario),
+			        DATESBETWEEN(
+			            Calendario[Fecha],
+			            DATE(_anioSeleccionado - 1, 1, 1),
+			            DATE(_anioSeleccionado - 1, 12, 31)
+			        ),
+			        FILTER(
+			            ALL(
+			                DIA_2026[CUENTA],
+			                DIA_2026[TIPO]
+			            ),
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "572"
+			                && DIA_2026[TIPO] = "CIER"
+			        )
+			    )
+			
+			VAR _movimientosEsteAnio =
+			    CALCULATE(
+			        SUMX(
+			            DIA_2026,
+			            DIA_2026[DEBE] - DIA_2026[HABER]
+			        ),
+			        REMOVEFILTERS(Calendario),
+			        DATESBETWEEN(
+			            Calendario[Fecha],
+			            _inicioEjercicio,
+			            _fechaMaxima
+			        ),
+			        FILTER(
+			            ALL(
+			                DIA_2026[CUENTA],
+			                DIA_2026[TIPO]
+			            ),
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "572"
+			                && NOT(DIA_2026[TIPO] IN {"PERD", "CIER"})
+			        )
+			    )
+			
+			VAR Resultado =
+			    IF(
+			        _numCierreEsteAnio > 0,
+			        _cierreEsteAnio,
+			        _saldoInicial + _movimientosEsteAnio
+			    )
+			
+			RETURN
+			    IF(
+			        ISBLANK(_fechaMaxima),
+			        BLANK(),
+			        IF(
+			            ABS(Resultado) < 0.01,
+			            0,
+			            Resultado
+			        )
+			    )
+		lineageTag: 1efeca46-7a59-4542-89f8-082aeaf19283
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gasto Financiero' =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 2) = "66"
+			                &&
+			            NOT (
+			                UPPER(
+			                    TRIM(
+			                        SUBSTITUTE(
+			                            COALESCE(DIA_2026[TIPO], ""),
+			                            UNICHAR(160),
+			                            ""
+			                        )
+			                    )
+			                ) IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[DEBE] - DIA_2026[HABER]
+			    )
+			RETURN
+			    IF(
+			        ABS(Resultado) < 0.01,
+			        0,
+			        Resultado
+			    )
+		lineageTag: d4389e89-fad3-4ddc-bf92-901b401f1bf1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gasto Personal' =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            (
+			                LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "640"
+			                ||
+			                LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "642"
+			            )
+			            &&
+			            NOT (
+			                UPPER(
+			                    TRIM(
+			                        SUBSTITUTE(
+			                            COALESCE(DIA_2026[TIPO], ""),
+			                            UNICHAR(160),
+			                            ""
+			                        )
+			                    )
+			                ) IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[DEBE] - DIA_2026[HABER]
+			    )
+			-- Primer día del periodo según el calendario, sin el recorte que hace DIA (relación bidireccional) a los días con apuntes
+			VAR _inicioPeriodo =
+			    CALCULATE(MIN(Calendario[Fecha]), CROSSFILTER(DIA_2026[FECHA], Calendario[Fecha], OneWay))
+			RETURN
+			    IF(
+			        _inicioPeriodo > TODAY(),
+			        BLANK(),
+			        IF(ABS(Resultado) < 0.01, 0, Resultado)
+			    )
+		lineageTag: 9c26de44-9cec-4575-b08e-faf7f4e05963
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Evolucion_Compras =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            (
+			                LEFT(TRIM(DIA_2026[CUENTA]), 3) IN {"600", "601", "602", "606", "607", "608", "609", "610", "611", "612"}
+			            )
+			            &&
+			            NOT(
+			                UPPER(TRIM(SUBSTITUTE(COALESCE(DIA_2026[TIPO], ""), UNICHAR(160), "")))
+			                IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[DEBE] - DIA_2026[HABER]
+			    )
+			-- Primer día del periodo según el calendario, sin el recorte que hace DIA (relación bidireccional) a los días con apuntes
+			VAR _inicioPeriodo =
+			    CALCULATE(MIN(Calendario[Fecha]), CROSSFILTER(DIA_2026[FECHA], Calendario[Fecha], OneWay))
+			RETURN
+			    IF(
+			        _inicioPeriodo > TODAY(),
+			        BLANK(),
+			        IF(ABS(Resultado) < 0.01, 0, Resultado)
+			    )
+		lineageTag: d0f1988c-4fe9-4b9c-8c72-69e25601235d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Gasto_Explotación =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 2) = "62"
+			                &&
+			            NOT (
+			                UPPER(
+			                    TRIM(
+			                        SUBSTITUTE(
+			                            COALESCE(DIA_2026[TIPO], ""),
+			                            UNICHAR(160),
+			                            ""
+			                        )
+			                    )
+			                ) IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[DEBE] - DIA_2026[HABER]
+			    )
+			-- Primer día del periodo según el calendario, sin el recorte que hace DIA (relación bidireccional) a los días con apuntes
+			VAR _inicioPeriodo =
+			    CALCULATE(MIN(Calendario[Fecha]), CROSSFILTER(DIA_2026[FECHA], Calendario[Fecha], OneWay))
+			RETURN
+			    IF(
+			        _inicioPeriodo > TODAY(),
+			        BLANK(),
+			        IF(ABS(Resultado) < 0.01, 0, Resultado)
+			    )
+		lineageTag: dbbbfb06-9a83-4c93-b0b7-685fd577246c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Saldo_Proveedores =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "400"
+			                &&
+			            NOT (
+			                UPPER(
+			                    TRIM(
+			                        SUBSTITUTE(
+			                            COALESCE(DIA_2026[TIPO], ""),
+			                            UNICHAR(160),
+			                            ""
+			                        )
+			                    )
+			                ) IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[HABER] - DIA_2026[DEBE]
+			    )
+			RETURN
+			    IF(
+			        ABS(Resultado) < 0.01,
+			        0,
+			        Resultado
+			    )
+		lineageTag: f63198f7-3247-4aad-b964-bae3851c28cc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Saldo_Clientes =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "430"
+			                &&
+			            NOT (
+			                UPPER(
+			                    TRIM(
+			                        SUBSTITUTE(
+			                            COALESCE(DIA_2026[TIPO], ""),
+			                            UNICHAR(160),
+			                            ""
+			                        )
+			                    )
+			                ) IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[DEBE] - DIA_2026[HABER]
+			    )
+			RETURN
+			    IF(
+			        ABS(Resultado) < 0.01,
+			        0,
+			        Resultado
+			    )
+		lineageTag: 902fbe92-e87a-43db-87d2-2f780edeaacb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Top_Proveedores_Operaciones =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "400"
+			                &&
+			            NOT (
+			                UPPER(
+			                    TRIM(
+			                        SUBSTITUTE(
+			                            COALESCE(DIA_2026[TIPO], ""),
+			                            UNICHAR(160),
+			                            ""
+			                        )
+			                    )
+			                ) IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[HABER]
+			    )
+			RETURN
+			    IF(
+			        ABS(Resultado) < 0.01,
+			        BLANK(),
+			        Resultado
+			    )
+		lineageTag: 61683ae0-59a2-400d-a8dc-37b3d186e6c6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Top_Clientes_Operaciones =
+			
+			VAR Resultado =
+			    SUMX(
+			        FILTER(
+			            DIA_2026,
+			            LEFT(FORMAT(DIA_2026[CUENTA], "0"), 3) = "430"
+			                &&
+			            NOT (
+			                UPPER(
+			                    TRIM(
+			                        SUBSTITUTE(
+			                            COALESCE(DIA_2026[TIPO], ""),
+			                            UNICHAR(160),
+			                            ""
+			                        )
+			                    )
+			                ) IN {"PERD", "CIER"}
+			            )
+			        ),
+			        DIA_2026[DEBE]
+			    )
+			RETURN
+			    IF(
+			        ABS(Resultado) < 0.01,
+			        BLANK(),
+			        Resultado
+			    )
+		lineageTag: 627d6841-204b-4bf7-bbda-891408ba2e48
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Ranking_Proveedores =
+			
+			VAR ValorActual =
+			    [Top_Proveedores_Operaciones]
+			RETURN
+			    IF(
+			        ISBLANK(ValorActual),
+			        BLANK(),
+			        RANKX(
+			            FILTER(
+			                ALLSELECTED(MAY_2026[TITULO]),
+			                NOT ISBLANK([Top_Proveedores_Operaciones])
+			            ),
+			            [Top_Proveedores_Operaciones],
+			            ,
+			            DESC,
+			            DENSE
+			        )
+			    )
+		formatString: 0
+		lineageTag: 62b827c1-4f4f-4a97-b6a5-8d06c5910c32
+
+	measure Ranking_Clientes =
+			
+			VAR ValorActual =
+			    [Top_Clientes_Operaciones]
+			RETURN
+			    IF(
+			        ISBLANK(ValorActual),
+			        BLANK(),
+			        RANKX(
+			            FILTER(
+			                ALLSELECTED(MAY_2026[TITULO]),
+			                NOT ISBLANK([Top_Clientes_Operaciones])
+			            ),
+			            [Top_Clientes_Operaciones],
+			            ,
+			            DESC,
+			            DENSE
+			        )
+			    )
+		formatString: 0
+		lineageTag: df5459f7-7a87-4978-b1df-efdf39055872
+
+	measure IVA_477 =
+			
+			SUMX(
+			    FILTER(
+			        DIA_2026,
+			        LEFT(FORMAT(DIA_2026[CUENTA],"0"),3)="477"
+			    ),
+			    DIA_2026[HABER]-DIA_2026[DEBE]
+			)
+		lineageTag: c8f55286-30d4-44f9-9bae-77101b22498c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure IVA_472 =
+			
+			SUMX(
+			    FILTER(
+			        DIA_2026,
+			        LEFT(FORMAT(DIA_2026[CUENTA],"0"),3)="472"
+			    ),
+			    DIA_2026[DEBE]-DIA_2026[HABER]
+			)
+		lineageTag: b002d862-39a7-4050-86eb-13cd87d52edd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure IVA_470 =
+			
+			SUMX(
+			    FILTER(
+			        DIA_2026,
+			        LEFT(FORMAT(DIA_2026[CUENTA],"0"),3)="470"
+			    ),
+			    DIA_2026[DEBE]-DIA_2026[HABER]
+			)
+		lineageTag: 88988bb8-3c88-4e6f-9ab1-8de4665f7fd5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Movimientos_470_2025 =
+			
+			SUMX(
+			    FILTER(
+			        DIA_2026,
+			        LEFT(FORMAT(DIA_2026[CUENTA],"0"),3)="470"
+			        &&
+			        DIA_2026[Codigo_empresa]=310
+			        &&
+			        YEAR(DIA_2026[FECHA])=2025
+			    ),
+			    DIA_2026[DEBE]-DIA_2026[HABER]
+			)
+		lineageTag: 26a0bc2d-0b58-411e-9595-db0ae5267851
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Test IVA_470_Inicial' =
+			
+			VAR _fechaMaxima =
+			    MAXX(
+			        ALLSELECTED(Calendario[Fecha]),
+			        Calendario[Fecha]
+			    )
+			
+			VAR _anioSeleccionado =
+			    YEAR(_fechaMaxima)
+			
+			VAR _inicioEjercicioAnterior =
+			    DATE(_anioSeleccionado - 1, 1, 1)
+			
+			VAR _finEjercicioAnterior =
+			    DATE(_anioSeleccionado - 1, 12, 31)
+			
+			VAR IVA_470_Inicial =
+			    CALCULATE(
+			        SUMX(
+			            DIA_2026,
+			            DIA_2026[HABER] - DIA_2026[DEBE]
+			        ),
+			        REMOVEFILTERS(Calendario),
+			        DATESBETWEEN(
+			            Calendario[Fecha],
+			            _inicioEjercicioAnterior,
+			            _finEjercicioAnterior
+			        ),
+			        FILTER(
+			            ALL(
+			                DIA_2026[CUENTA],
+			                DIA_2026[TIPO]
+			            ),
+			            LEFT(TRIM(DIA_2026[CUENTA]), 3) = "470"
+			                &&
+			            UPPER(
+			                TRIM(
+			                    SUBSTITUTE(
+			                        COALESCE(DIA_2026[TIPO], ""),
+			                        UNICHAR(160),
+			                        ""
+			                    )
+			                )
+			            ) = "CIER"
+			        )
+			    )
+			
+			RETURN
+			    IF(
+			        ISBLANK(_fechaMaxima),
+			        BLANK(),
+			        IVA_470_Inicial
+			    )
+		lineageTag: c2e3c3c2-f6d7-4e78-8351-1cb8f3a2de0e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Test IVA_470_Movimientos' =
+			
+			VAR _fechaMaxima =
+			    MAXX(
+			        ALLSELECTED(Calendario[Fecha]),
+			        Calendario[Fecha]
+			    )
+			
+			VAR _anioSeleccionado =
+			    YEAR(_fechaMaxima)
+			
+			VAR _inicioEjercicio =
+			    DATE(_anioSeleccionado, 1, 1)
+			
+			VAR IVA_470_Movimientos =
+			    CALCULATE(
+			        SUMX(
+			            DIA_2026,
+			            DIA_2026[DEBE] - DIA_2026[HABER]
+			        ),
+			        REMOVEFILTERS(Calendario),
+			        DATESBETWEEN(
+			            Calendario[Fecha],
+			            _inicioEjercicio,
+			            _fechaMaxima
+			        ),
+			        FILTER(
+			            ALL(
+			                DIA_2026[CUENTA],
+			                DIA_2026[TIPO]
+			            ),
+			            LEFT(TRIM(DIA_2026[CUENTA]), 3) = "470"
+			                &&
+			            UPPER(
+			                TRIM(
+			                    SUBSTITUTE(
+			                        COALESCE(DIA_2026[TIPO], ""),
+			                        UNICHAR(160),
+			                        ""
+			                    )
+			                )
+			            ) <> "PERD"
+			        )
+			    )
+			
+			RETURN
+			    IF(
+			        ISBLANK(_fechaMaxima),
+			        BLANK(),
+			        IVA_470_Movimientos
+			    )
+		lineageTag: 98882492-854e-4774-b02a-0310414d16d0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Test Fecha Maxima' = MAXX(ALLSELECTED(Calendario[Fecha]), Calendario[Fecha])
+		formatString: General Date
+		lineageTag: bcbb3fa5-3a6c-4bbb-a8b7-c5a72694c024
+
+	measure 'Test Fecha Maxima Simple' = MAX(Calendario[Fecha])
+		formatString: General Date
+		lineageTag: a146f493-79a3-4728-8e71-63b8246d0ec4
+
+	/// Texto con flecha (▲/▼) y el % Margen, para usar como tooltip/campo junto a la tarjeta de Margen.
+	measure 'Margen Indicador' =
+			VAR pct = [% Margen]
+			RETURN IF(pct >= 0, "▲ " & FORMAT(pct, "0.0%"), "▼ " & FORMAT(ABS(pct), "0.0%"))
+		displayFolder: KPI
+		lineageTag: eb88dd2c-3056-4ab5-9808-f536f6303163
+
+	/// Color hexadecimal para formato condicional del texto de Margen Indicador (verde si es positivo, rojo si es negativo).
+	measure 'Margen Indicador Color' = IF([% Margen] >= 0, "#149226", "#C0392B")
+		displayFolder: KPI
+		lineageTag: 53d28abe-3ce0-4fdd-aea1-7e68dedfbff6
+
+	column Columna
+		formatString: 0
+		lineageTag: b1191b14-3905-480b-bc04-c86dc57df0e4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Columna]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medidas = calculated
+		mode: import
+		source = Row("Columna", BLANK())
+
+	annotation PBI_Id = d54d17246aa94da59e1644b9191e66aa
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

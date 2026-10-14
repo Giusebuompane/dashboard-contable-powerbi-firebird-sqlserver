@@ -1,0 +1,243 @@
+table DIA_2026
+	lineageTag: a0f973c4-f9e9-4bd8-80c4-ee98f03b1cda
+
+	column ASIENTO
+		dataType: int64
+		formatString: 0
+		lineageTag: 19b830d5-bf29-4f07-8640-704744f30865
+		summarizeBy: sum
+		sourceColumn: ASIENTO
+
+		annotation SummarizationSetBy = Automatic
+
+	column FECHA
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b35418d2-8d9f-4859-be16-8ba74d5ceff4
+		summarizeBy: none
+		sourceColumn: FECHA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column EPIGRAFE
+		dataType: int64
+		formatString: 0
+		lineageTag: 06af4c96-2037-4395-bba2-648f5cb83620
+		summarizeBy: none
+		sourceColumn: EPIGRAFE
+
+		annotation SummarizationSetBy = User
+
+	column CUENTA
+		dataType: int64
+		formatString: 0
+		lineageTag: 20f80533-bd27-4722-b03e-a96ac1249b70
+		summarizeBy: none
+		sourceColumn: CUENTA
+
+		annotation SummarizationSetBy = User
+
+	column DH
+		dataType: string
+		lineageTag: 5c21b303-942c-4fbd-9c8e-7467ec1ba282
+		summarizeBy: none
+		sourceColumn: DH
+
+		annotation SummarizationSetBy = Automatic
+
+	column CONCEPTO
+		dataType: string
+		lineageTag: 8c55a50d-0538-4dce-86b2-5c99d6d1e4dc
+		summarizeBy: none
+		sourceColumn: CONCEPTO
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEBE
+		dataType: double
+		lineageTag: e8b5562d-8fd4-4523-b0ed-173dc07de999
+		summarizeBy: sum
+		sourceColumn: DEBE
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HABER
+		dataType: double
+		lineageTag: 27b93b43-7343-430d-89ae-9f969ca93e86
+		summarizeBy: sum
+		sourceColumn: HABER
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CLAVE
+		dataType: int64
+		formatString: 0
+		lineageTag: 38f2b01d-149b-42a2-ab9b-1ef42f81b700
+		summarizeBy: sum
+		sourceColumn: CLAVE
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPO
+		dataType: string
+		lineageTag: 3a4bbddf-feca-47bf-9ebf-72206c439e53
+		summarizeBy: none
+		sourceColumn: TIPO
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODASIEN
+		dataType: int64
+		formatString: 0
+		lineageTag: cfc17682-1919-400b-95a0-cf322cf63594
+		summarizeBy: sum
+		sourceColumn: CODASIEN
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODREGIS
+		dataType: int64
+		formatString: 0
+		lineageTag: 39a7c4fe-9256-43cc-89c6-3b4575418790
+		summarizeBy: none
+		sourceColumn: CODREGIS
+
+		annotation SummarizationSetBy = User
+
+	column ESTADO
+		dataType: string
+		lineageTag: b94637b2-65e1-4c31-809f-ea786853e128
+		summarizeBy: none
+		sourceColumn: ESTADO
+
+		annotation SummarizationSetBy = Automatic
+
+	column PUNTEO
+		dataType: string
+		lineageTag: 047103d4-719e-4bf8-8781-3d77fcb34c23
+		summarizeBy: none
+		sourceColumn: PUNTEO
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODNOTA
+		dataType: string
+		lineageTag: 3eac1aa1-f370-4fff-9632-a87937a71685
+		summarizeBy: none
+		sourceColumn: CODNOTA
+
+		annotation SummarizationSetBy = Automatic
+
+	column CLAVEMEM
+		dataType: string
+		lineageTag: 3d9775ab-b5f7-4d00-98a3-70253b82ab29
+		summarizeBy: none
+		sourceColumn: CLAVEMEM
+
+		annotation SummarizationSetBy = Automatic
+
+	column TEXTO1
+		dataType: string
+		lineageTag: be5ab683-8943-4a70-912e-7385f4ab4838
+		summarizeBy: none
+		sourceColumn: TEXTO1
+
+		annotation SummarizationSetBy = Automatic
+
+	column TEXTO2
+		dataType: string
+		lineageTag: 0b0bebf8-fd39-4797-93e8-12198b095897
+		summarizeBy: none
+		sourceColumn: TEXTO2
+
+		annotation SummarizationSetBy = Automatic
+
+	column COBRO347
+		dataType: string
+		lineageTag: 28f4fbc1-194b-4f7c-8c83-43ad2c7b6bc7
+		summarizeBy: none
+		sourceColumn: COBRO347
+
+		annotation SummarizationSetBy = Automatic
+
+	column NLINEA
+		dataType: int64
+		formatString: 0
+		lineageTag: 11355c8f-f525-4ac8-aa88-b091f91b5424
+		summarizeBy: sum
+		sourceColumn: NLINEA
+
+		annotation SummarizationSetBy = Automatic
+
+	column APLI
+		dataType: string
+		lineageTag: 4d2923d6-3023-41b0-87c1-b343836cc155
+		summarizeBy: none
+		sourceColumn: APLI
+
+		annotation SummarizationSetBy = Automatic
+
+	column Año
+		dataType: int64
+		formatString: 0
+		lineageTag: 7af7d249-afc7-40ef-b2bb-13a1a0b5764a
+		summarizeBy: sum
+		sourceColumn: Año
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo_empresa
+		dataType: int64
+		formatString: 0
+		lineageTag: cea1bbe2-2d56-4fbb-8002-3dcc879b0f1f
+		summarizeBy: none
+		sourceColumn: Codigo_empresa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Llave_compuesta_MAY =
+			
+			DIA_2026[Año] & "-" & FORMAT(LEFT(DIA_2026[CUENTA],12), "0") & "-" & FORMAT(DIA_2026[Codigo_empresa], "0")
+		lineageTag: dbc05c64-384d-4ee0-88e1-8f81efd1a2d1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Llave_compuesta_CLA =
+			
+			DIA_2026[Año] & "-" & DIA_2026[CLAVE] & "-" & DIA_2026[Codigo_empresa]
+		lineageTag: a83626d2-3e44-40f0-8a3a-057af8c35c7e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Llave_compuesta_DOC =
+			
+			DIA_2026[Año] & "-" & FORMAT(DIA_2026[CODREGIS], "0") & "-" & FORMAT(DIA_2026[Codigo_empresa], "0")
+		lineageTag: 56b7192d-f6a5-4bb6-ba24-50e457514562
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIA_2026 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database(Servidor_SQL, Base_Datos_SQL){[Schema="dbo",Item="DIA_2026"]}[Data],
+				    #"Valor reemplazado" = Table.ReplaceValue(Origen,"","0",Replacer.ReplaceValue,{"CLAVE"}),
+				    #"Valor reemplazado1" = Table.ReplaceValue(#"Valor reemplazado",null,0,Replacer.ReplaceValue,{"CODREGIS"}),
+				    #"Valor reemplazado2" = Table.ReplaceValue(#"Valor reemplazado1",".",",",Replacer.ReplaceText,{"CLAVE"}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Valor reemplazado2",{{"ASIENTO", Int64.Type}, {"FECHA", type date}, {"EPIGRAFE", Int64.Type}, {"CUENTA", Int64.Type}, {"DH", type text}, {"CONCEPTO", type text}, {"DEBE", type number}, {"HABER", type number}, {"CLAVE", Int64.Type}, {"TIPO", type text}, {"CODASIEN", Int64.Type}, {"CODREGIS", Int64.Type}, {"ESTADO", type text}, {"PUNTEO", type text}, {"CODNOTA", type text}, {"CLAVEMEM", type text}, {"TEXTO1", type text}, {"TEXTO2", type text}, {"COBRO347", type text}, {"NLINEA", Int64.Type}, {"APLI", type text}, {"Año", Int64.Type}, {"Codigo_empresa", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegación
+

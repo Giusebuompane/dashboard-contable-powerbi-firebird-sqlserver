@@ -1,0 +1,74 @@
+table CLA_2026
+	lineageTag: 8902183e-b138-4e89-91e0-4b6733d2d822
+
+	column CLAVE
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a44db07-f8fe-45d0-be29-3ad22f5c8602
+		summarizeBy: sum
+		sourceColumn: CLAVE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DESCRIP
+		dataType: string
+		lineageTag: 4f98b7bb-6e7e-4abd-a7d9-129ca81b5fbc
+		summarizeBy: none
+		sourceColumn: DESCRIP
+
+		annotation SummarizationSetBy = Automatic
+
+	column BAJA
+		dataType: int64
+		formatString: 0
+		lineageTag: e72e9674-db85-4796-8efa-72d02373ca57
+		summarizeBy: sum
+		sourceColumn: BAJA
+
+		annotation SummarizationSetBy = Automatic
+
+	column Año
+		dataType: int64
+		formatString: 0
+		lineageTag: a0752f4d-0608-41e5-92c4-8ffb802f3126
+		summarizeBy: sum
+		sourceColumn: Año
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo_empresa
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a267c59-d4d9-4eba-8f68-4b642163b078
+		summarizeBy: sum
+		sourceColumn: Codigo_empresa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Llave_compuesta = ```
+			
+			FORMAT(CLA_2026[Año], "0") 
+			& "-" & 
+			FORMAT(CLA_2026[CLAVE], "0") 
+			& "-" & 
+			FORMAT(CLA_2026[Codigo_empresa], "0")
+			```
+		lineageTag: 809e1150-7f69-403b-b6bc-65d0c71363d8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CLA_2026 = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database(Servidor_SQL, Base_Datos_SQL){[Schema="dbo",Item="CLA_2026"]}[Data],
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"CLAVE", Int64.Type}, {"DESCRIP", type text}, {"BAJA", Int64.Type}, {"Año", Int64.Type}, {"Codigo_empresa", Int64.Type}}),
+				    #"Filas ordenadas" = Table.Sort(#"Tipo cambiado",{{"CLAVE", Order.Ascending}})
+				in
+				    #"Filas ordenadas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

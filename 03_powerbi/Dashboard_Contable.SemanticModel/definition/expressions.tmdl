@@ -1,0 +1,10 @@
+expression Servidor_SQL = "localhost" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: e36fbcb0-7498-415e-b32d-2e0c0a5eef96
+
+	annotation PBI_ResultType = Text
+
+expression Base_Datos_SQL = "BBDD_PowerBI" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 64587a73-f4ec-4229-8cac-a2f45d288d09
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,71 @@
+relationship 00bb8979-0257-f099-96c5-574072ad11cd
+	crossFilteringBehavior: bothDirections
+	fromColumn: DIA_2026.FECHA
+	toColumn: Calendario.Fecha
+
+relationship 3f65a632-aebb-48fc-8056-168ad5b114a2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: EMPRESA.FALTA
+	toColumn: LocalDateTable_4985e77a-0d17-412b-a808-cb242c8737e9.Date
+
+relationship a565516a-5270-48bf-9ec2-b227f9781b63
+	joinOnDateBehavior: datePartOnly
+	fromColumn: EMPRESA.FBAJA
+	toColumn: LocalDateTable_edf26459-67c8-4202-9c24-aa695d10189e.Date
+
+relationship c3886db8-3de8-4dee-a6d3-d09fb65a47c2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: EMPRESA.FECHCON
+	toColumn: LocalDateTable_5209b8d2-3ff8-4ab2-932a-b6e4dea05c7c.Date
+
+relationship 84948686-34c0-4527-9e08-c9ac4b18b520
+	joinOnDateBehavior: datePartOnly
+	fromColumn: EMPRESA.FECHPOD
+	toColumn: LocalDateTable_4205f44e-2c79-4945-a408-bd40440cbb0a.Date
+
+relationship 2d41ef83-47d1-4bb3-b777-8512b7a0bdd9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SUJETOS.VIGDESDE
+	toColumn: LocalDateTable_49c2daba-f037-4f39-a00a-697d1e48d277.Date
+
+relationship 2550ab8f-33c2-47bd-82f2-483f2fd2eab1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SUJETOS.VIGHASTA
+	toColumn: LocalDateTable_843f9b07-8ec3-4c7a-9f22-ff789d55dc47.Date
+
+relationship db1b8ffe-0539-458a-b992-6dfd79d0b41c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Clientes_ACG.FALTA
+	toColumn: LocalDateTable_576e448b-e763-4286-a810-20c2c4e31579.Date
+
+relationship 9d323791-f64c-4faf-a968-7a0c7411c548
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Clientes_ACG.FBAJA
+	toColumn: LocalDateTable_c6b58b37-d00a-46f9-b41b-5ed064d2466d.Date
+
+relationship AutoDetected_a9724b72-e191-4cf0-abd9-b9dfd64519c3
+	fromColumn: DIA_2026.Codigo_empresa
+	toColumn: Clientes_ACG.Codigo_empresa
+
+relationship 17e32020-4372-997e-93d5-74c467ca0f86
+	crossFilteringBehavior: bothDirections
+	fromColumn: DIA_2026.Llave_compuesta_MAY
+	toColumn: MAY_INTERMEDIA.Llave_compuesta
+
+relationship 81eb23d5-0a14-18be-c174-13cf3354c5b0
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: MAY_2026.Llave_compuesta
+	toColumn: MAY_INTERMEDIA.Llave_compuesta
+
+relationship 2d794293-004f-5185-393e-ebd919842340
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: CLA_2026.Llave_compuesta
+	toColumn: CLA_INTERMEDIA.Llave_compuesta
+
+relationship d7ec21b8-b151-c511-b051-1ce578bcd1e3
+	crossFilteringBehavior: bothDirections
+	fromColumn: DIA_2026.Llave_compuesta_CLA
+	toColumn: CLA_INTERMEDIA.Llave_compuesta
+

@@ -1,0 +1,608 @@
+table SUJETOS
+	isHidden
+	lineageTag: a8403be3-967d-454a-95e0-a6bb24d9b190
+
+	column CODIGO
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 09f1929c-d2bb-40ce-9712-d9bd8d0d5d21
+		summarizeBy: sum
+		sourceColumn: CODIGO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NIF
+		dataType: string
+		isHidden
+		lineageTag: 6293f769-2cc5-4059-b629-59d0c60930f1
+		summarizeBy: none
+		sourceColumn: NIF
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NOMBRE
+		dataType: string
+		isHidden
+		lineageTag: 34625c4c-76db-4fe9-a908-4986932bec8d
+		summarizeBy: none
+		sourceColumn: NOMBRE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NOMBCOM
+		dataType: string
+		isHidden
+		lineageTag: 29be062f-ccf6-4c88-aa23-3c01b640c6b7
+		summarizeBy: none
+		sourceColumn: NOMBCOM
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOMICILIO
+		dataType: string
+		isHidden
+		lineageTag: 48a79194-e7b9-4aaf-888c-0347c750939a
+		summarizeBy: none
+		sourceColumn: DOMICILIO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CP
+		dataType: string
+		isHidden
+		lineageTag: 43f4b9d9-a1fa-4160-a8fc-744d60ea4aa6
+		summarizeBy: none
+		sourceColumn: CP
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VIA
+		dataType: string
+		isHidden
+		lineageTag: b67528c8-e338-45f6-a1d3-15f90696b0ff
+		summarizeBy: none
+		sourceColumn: VIA
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column POBLACION
+		dataType: string
+		isHidden
+		lineageTag: f49821cf-2d0a-450e-ac38-3ac91d67559c
+		summarizeBy: none
+		sourceColumn: POBLACION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMERO
+		dataType: string
+		isHidden
+		lineageTag: 18d2832a-bddd-4b49-89b0-c337dbac1216
+		summarizeBy: none
+		sourceColumn: NUMERO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ESCALERA
+		dataType: string
+		isHidden
+		lineageTag: a35585b9-1579-450e-bc00-7be54f4af2b0
+		summarizeBy: none
+		sourceColumn: ESCALERA
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PISO
+		dataType: string
+		isHidden
+		lineageTag: 89831a75-1137-4696-92a2-7bfe7d689d1f
+		summarizeBy: none
+		sourceColumn: PISO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PUERTA
+		dataType: string
+		isHidden
+		lineageTag: 161c8969-53c4-474e-8113-ec8087b77181
+		summarizeBy: none
+		sourceColumn: PUERTA
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROVINCIA
+		dataType: string
+		isHidden
+		lineageTag: 580f8dc2-4709-4879-8331-2a1b6d1655e3
+		summarizeBy: none
+		sourceColumn: PROVINCIA
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TELEF1
+		dataType: string
+		isHidden
+		lineageTag: 9d8a17df-31ac-4604-8fe2-2dd477cc750d
+		summarizeBy: none
+		sourceColumn: TELEF1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TELEF2
+		dataType: string
+		isHidden
+		lineageTag: d2814e93-f149-42f6-a3c9-78fc2a022d75
+		summarizeBy: none
+		sourceColumn: TELEF2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TELEF3
+		dataType: string
+		isHidden
+		lineageTag: 48127dff-4bed-4a3d-8802-9ac71e5922ff
+		summarizeBy: none
+		sourceColumn: TELEF3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column FAX
+		dataType: string
+		isHidden
+		lineageTag: 50261a3c-bbfb-43ec-a14f-deb5152e2993
+		summarizeBy: none
+		sourceColumn: FAX
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPO1
+		dataType: string
+		isHidden
+		lineageTag: 419ca111-a760-4578-a998-d6fbf650a938
+		summarizeBy: none
+		sourceColumn: TIPO1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPO2
+		dataType: string
+		isHidden
+		lineageTag: 57a90d71-95ae-4f59-b4ba-650267234e28
+		summarizeBy: none
+		sourceColumn: TIPO2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPO3
+		dataType: string
+		isHidden
+		lineageTag: 9f8e6152-2a76-41e8-bb9a-8287bb437908
+		summarizeBy: none
+		sourceColumn: TIPO3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPO4
+		dataType: string
+		isHidden
+		lineageTag: 59bca8c7-68fa-4fba-9f9b-80634a6f8dd1
+		summarizeBy: none
+		sourceColumn: TIPO4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPO5
+		dataType: string
+		isHidden
+		lineageTag: f7d21bb4-796c-4e64-aa81-f6bd63cee998
+		summarizeBy: none
+		sourceColumn: TIPO5
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPO6
+		dataType: string
+		isHidden
+		lineageTag: 554eccd0-c382-495f-ae76-141050764c72
+		summarizeBy: none
+		sourceColumn: TIPO6
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TEXTO
+		dataType: string
+		isHidden
+		lineageTag: 254d4c1f-f269-4892-a356-67262f652e95
+		summarizeBy: none
+		sourceColumn: TEXTO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ME
+		dataType: string
+		isHidden
+		lineageTag: 7a162153-b765-4198-9a9d-c73ca66c34ce
+		summarizeBy: none
+		sourceColumn: ME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODEMP
+		dataType: string
+		isHidden
+		lineageTag: d741f3dd-d9ef-48ec-a839-be9d1153aa99
+		summarizeBy: none
+		sourceColumn: CODEMP
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CLAEMP
+		dataType: string
+		isHidden
+		lineageTag: b4da779c-cbb9-4c2e-8376-e29415585e59
+		summarizeBy: none
+		sourceColumn: CLAEMP
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODPRO
+		dataType: string
+		isHidden
+		lineageTag: c3a9233e-a689-4b16-9186-c7fcdf0da81e
+		summarizeBy: none
+		sourceColumn: CODPRO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CLAPRO
+		dataType: string
+		isHidden
+		lineageTag: 67b47379-8874-4fcc-bc71-ed2203585a21
+		summarizeBy: none
+		sourceColumn: CLAPRO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CLASUJ
+		dataType: string
+		isHidden
+		lineageTag: 945f4860-1777-4b08-9e73-b12aaefed9d6
+		summarizeBy: none
+		sourceColumn: CLASUJ
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPONIF
+		dataType: string
+		isHidden
+		lineageTag: f784a521-347f-4a16-ade6-2547e737529e
+		summarizeBy: none
+		sourceColumn: TIPONIF
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPOSUJ
+		dataType: string
+		isHidden
+		lineageTag: 1b6c255f-cb3b-494e-8434-6f213530395b
+		summarizeBy: none
+		sourceColumn: TIPOSUJ
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NOMBRELARG
+		dataType: string
+		isHidden
+		lineageTag: 5d443512-cddc-4b40-9c18-722d8e44ab07
+		summarizeBy: none
+		sourceColumn: NOMBRELARG
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CORREO
+		dataType: string
+		isHidden
+		lineageTag: 34fa3775-8061-4d07-8e05-f6e529fd0aee
+		summarizeBy: none
+		sourceColumn: CORREO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column WEB
+		dataType: string
+		isHidden
+		lineageTag: b586b045-ecba-4856-9de2-b175ff455e3a
+		summarizeBy: none
+		sourceColumn: WEB
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NOMBRE2
+		dataType: string
+		isHidden
+		lineageTag: e5cb7994-a4b8-480f-9e56-8d0af464c490
+		summarizeBy: none
+		sourceColumn: NOMBRE2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORIGEN
+		dataType: string
+		isHidden
+		lineageTag: 18629999-55cb-4507-9400-4fa56564b7ff
+		summarizeBy: none
+		sourceColumn: ORIGEN
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column RESPONSABL
+		dataType: string
+		isHidden
+		lineageTag: 6d7fc000-9e91-4d92-bde7-f22073cc5071
+		summarizeBy: none
+		sourceColumn: RESPONSABL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TIPO
+		dataType: string
+		isHidden
+		lineageTag: 32d090f1-2954-44fe-b83a-e093e8fc497c
+		summarizeBy: none
+		sourceColumn: TIPO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VIGDESDE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 0b7be462-73e9-4df8-a31f-659b7a4ac729
+		summarizeBy: none
+		sourceColumn: VIGDESDE
+
+		variation Variación
+			isDefault
+			relationship: 2d41ef83-47d1-4bb3-b777-8512b7a0bdd9
+			defaultHierarchy: LocalDateTable_49c2daba-f037-4f39-a00a-697d1e48d277.'Jerarquía de fechas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VIGHASTA
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 725aa4e1-d9c3-46a2-acc6-f899af66d4ef
+		summarizeBy: none
+		sourceColumn: VIGHASTA
+
+		variation Variación
+			isDefault
+			relationship: 2550ab8f-33c2-47bd-82f2-483f2fd2eab1
+			defaultHierarchy: LocalDateTable_843f9b07-8ec3-4c7a-9f22-ff789d55dc47.'Jerarquía de fechas'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column RESTRICCIO
+		dataType: string
+		isHidden
+		lineageTag: d6dfb19b-525b-4e9e-9e93-a9a92a967793
+		summarizeBy: none
+		sourceColumn: RESTRICCIO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ANAGRAMA
+		dataType: string
+		isHidden
+		lineageTag: c861dec8-0c87-4629-a8f6-8366b8b5e946
+		summarizeBy: none
+		sourceColumn: ANAGRAMA
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OCULTO
+		dataType: string
+		isHidden
+		lineageTag: 1a0772f8-8c9f-4ef1-b16f-c06f538dbc7e
+		summarizeBy: none
+		sourceColumn: OCULTO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column INCOMPLETO
+		dataType: string
+		isHidden
+		lineageTag: bcccf8b8-c368-47b6-8aa1-a03a566ea046
+		summarizeBy: none
+		sourceColumn: INCOMPLETO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODMUNI
+		dataType: string
+		isHidden
+		lineageTag: d7771080-7b40-4abc-9060-0aca0e9c1c0c
+		summarizeBy: none
+		sourceColumn: CODMUNI
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7377ff7d-4215-493f-b72f-8d43f499b647
+		summarizeBy: count
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDIDIOMA
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: abf1b02c-693c-49a7-9dec-dda2f2c36287
+		summarizeBy: sum
+		sourceColumn: IDIDIOMA
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDNACIONALIDAD
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fff2e4ff-a7fa-4a55-8261-ade42b8b5be6
+		summarizeBy: sum
+		sourceColumn: IDNACIONALIDAD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIRECCION
+		dataType: string
+		isHidden
+		lineageTag: 1f14ade9-4af2-4039-bffe-c7bed8afab7d
+		summarizeBy: none
+		sourceColumn: DIRECCION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDVIA
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 82a2ac5f-5606-4b5a-bfdc-758f7c2afe20
+		summarizeBy: sum
+		sourceColumn: IDVIA
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EMAILS
+		dataType: string
+		isHidden
+		lineageTag: 7c578503-56a0-4d33-ad0d-446f3e91efbd
+		summarizeBy: none
+		sourceColumn: EMAILS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SUJETOS = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database(Servidor_SQL, Base_Datos_SQL){[Schema="dbo",Item="SUJETOS"]}[Data],
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"CODIGO", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+
