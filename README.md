@@ -186,6 +186,15 @@ Para usar la ETL contra una instalación real de Microdata, copiar `01_etl/.env.
 python 01_etl/etl_completo.py
 ```
 
+## Otros proyectos de BI
+
+Este es uno de varios proyectos de ETL y Power BI que he hecho para empresas de sectores distintos, con el mismo enfoque: sacar los datos de donde estén, moverlos a una base de datos propia en el servidor que toque y construir encima informes que se actualizan solos. Por ejemplo:
+
+- **Una cadena de restaurantes:** ventas y reservas, con los datos de reservas extraídos de la API de CoverManager, e informes semanales y mensuales para la dirección.
+- **Un grupo de clínicas y peluquerías con venta de producto en Amazon:** un informe de muchas páginas que junta la tienda física y el marketplace, con KPI de ventas, ticket medio, clientes nuevos y recurrentes, ocupación de agenda, stock y rentabilidad.
+
+Esos proyectos no están publicados porque son datos de clientes.
+
 ## Qué no está en el repositorio
 
 No he subido las bases de datos de Microdata, los CSV ni ningún dato de las empresas, las cifras usadas para validar las medidas, la documentación interna del cliente ni sus credenciales. El `.pbip` no incluye la caché de datos (`.pbi/cache.abf`). Los datos del `.pbix` y de la captura son los generados por el script de demostración.
